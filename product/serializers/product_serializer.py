@@ -4,14 +4,9 @@ from product.models.product import Category, Product
 from product.serializers.category_serializer import CategorySerializer
 
 
-
 class ProductSerializer(serializers.ModelSerializer):
     category = CategorySerializer(read_only=True, many=True)
     categories_id = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all(), write_only=True, many=True)
-
-class ProductSerializer(serializers.ModelSerializer):
-    category = CategorySerializer(required=True, many=True)
-
 
     class Meta:
         model = Product
@@ -22,7 +17,6 @@ class ProductSerializer(serializers.ModelSerializer):
             'price',
             'active',
             'category',
-
             'categories_id',
         ]
 
@@ -34,6 +28,3 @@ class ProductSerializer(serializers.ModelSerializer):
             product.category.add(category)
 
         return product 
-
-        ]
-
