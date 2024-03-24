@@ -1,4 +1,5 @@
-FROM python:3.12-slim as python-base
+# `python-base` sets up all our shared environment variables
+FROM python:3.8.1-slim as python-base
 
     # python
 ENV PYTHONUNBUFFERED=1 \
@@ -46,10 +47,9 @@ RUN apt-get update \
 
 # copy project requirement files here to ensure they will be cached.
 WORKDIR $PYSETUP_PATH
-COPY pyproject.toml ./pyproject.toml
+COPY poetry.lock pyproject.toml ./
 
 # install runtime deps - uses $POETRY_VIRTUALENVS_IN_PROJECT internally
-
 RUN poetry install --no-dev
 
 # quicker install as runtime deps are already installed
@@ -62,3 +62,4 @@ COPY . /app/
 EXPOSE 8000
 
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+
