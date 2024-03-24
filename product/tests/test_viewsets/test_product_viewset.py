@@ -37,6 +37,7 @@ class TestProductViewSet(APITestCase):
         self.assertEqual(product_data["results"][0]["price"], self.product.price)
         self.assertEqual(product_data["results"][0]["active"], self.product.active)
 
+
     def test_create_product(self):
         token = Token.objects.get(user__username=self.user.username)
         self.client.credentials(HTTP_AUTHORIZATION="Token " + token.key)
